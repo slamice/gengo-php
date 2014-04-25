@@ -8,35 +8,29 @@
 require_once '../init.php';
 
 // TODO: this example assumes you set the 2 values below.
-$api_key = 'your-public-api-key';
-$private_key = 'your private-api-key';
+$api_key = 'public_81912';
+$private_key = 'private_81912';
 
 // Get an instance of an Service Client
 $service = Gengo_Api::factory('service', $api_key, $private_key);
 
 $job1 = array(
-        'type' => 'text',
-        'body_src' => 'plop!',
+        'type' => 'file',
+        'file_key' => 'file_01',
         'lc_src' => 'en',
         'lc_tgt' => 'es',
         'tier' => 'standard',
         );
 
-$job2 = array(
-        'type' => 'text',
-        'body_src' => 'plop plop!',
-        'lc_src' => 'en',
-        'lc_tgt' => 'es',
-        'tier' => 'pro',
-        );
+$files['file_01'] = 'examples/testfiles/test_file1.txt';
 
 // The parameter is an array of jobs. If you set custom keys, they will be
 // mirrored in the response. Otherwise, default numerical keying applies. This
 // helps to keep track of which job corresponds to which quote.
-$jobs = array("key 1" => $job1, "key 2" => $job2);
 
-// Request quotes.
-$service->quote($jobs);
+$jobs = array('job_01' => $job1);
+
+$service->quote($jobs, $files);
 
 // Display server response.
 echo $service->getResponseBody();
